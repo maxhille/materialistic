@@ -103,9 +103,7 @@ public class AppUtils {
         }
         Intent intent = createViewIntent(context, item, url, session);
         if (!HackerNewsClient.BASE_WEB_URL.contains(Uri.parse(url).getHost())) {
-            if (intent.resolveActivity(context.getPackageManager()) != null) {
-                context.startActivity(intent);
-            }
+            context.startActivity(intent);
             return;
         }
         List<ResolveInfo> activities = context.getPackageManager()
