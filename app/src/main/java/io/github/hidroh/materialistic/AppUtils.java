@@ -102,31 +102,7 @@ public class AppUtils {
             return;
         }
         Intent intent = createViewIntent(context, item, url, session);
-        if (!HackerNewsClient.BASE_WEB_URL.contains(Uri.parse(url).getHost())) {
-            context.startActivity(intent);
-            return;
-        }
-        List<ResolveInfo> activities = context.getPackageManager()
-                .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        ArrayList<Intent> intents = new ArrayList<>();
-        for (ResolveInfo info : activities) {
-            if (info.activityInfo.packageName.equalsIgnoreCase(context.getPackageName())) {
-                continue;
-            }
-            intents.add(createViewIntent(context, item, url, session)
-                    .setPackage(info.activityInfo.packageName));
-        }
-        if (intents.isEmpty()) {
-            return;
-        }
-        if (intents.size() == 1) {
-            context.startActivity(intents.remove(0));
-        } else {
-            context.startActivity(Intent.createChooser(intents.remove(0),
-                    context.getString(R.string.chooser_title))
-                    .putExtra(Intent.EXTRA_INITIAL_INTENTS,
-                            intents.toArray(new Parcelable[intents.size()])));
-        }
+        context.startActivity(intent);
     }
 
     public static void setTextWithLinks(TextView textView, CharSequence html) {
